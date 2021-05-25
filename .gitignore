@@ -37,3 +37,4 @@ out/
 .vscode/
 /.jpb/
 /src/main/generated/
+/src/main/resources/application-secret.yml
