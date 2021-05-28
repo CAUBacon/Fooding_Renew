@@ -10,4 +10,5 @@ import javax.persistence.Entity;
 @Entity
 public class KakaoUser extends User{
     private String snsId;
+    private final String password = null;
 }

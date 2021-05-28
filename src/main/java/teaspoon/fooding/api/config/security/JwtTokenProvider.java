@@ -7,8 +7,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import teaspoon.fooding.service.CustomUserDetailsService;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
+    private final CustomUserDetailsService customUserDetailsService;
     @Value("spring.jwt.secret")
     private String secretKey;
 
@@ -43,16 +47,22 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public Authentication getAuthentication(String token) {
+        try {
+            Long id = Long.parseLong(getUserId(token));
+            UserDetails userDetails = customUserDetailsService.findById(id);
+            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
     public String getUserId(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-    }
-
-    public Authentication getAuthentication(String token) {
-        return null;
     }
 
     public String resolveToken(HttpServletRequest request) {
