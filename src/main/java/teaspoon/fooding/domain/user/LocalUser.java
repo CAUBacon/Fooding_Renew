@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -21,5 +22,9 @@ public class LocalUser extends User{
         super(nickname, gender);
         this.email = email;
         this.password = password;
+    }
+
+    public void encodePassword(PasswordEncoder encoder) {
+        this.password = encoder.encode(password);
     }
 }

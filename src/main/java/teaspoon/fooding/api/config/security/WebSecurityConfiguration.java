@@ -38,8 +38,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/*/signIn", "/*/signUp").permitAll()
-                .antMatchers(HttpMethod.GET, "/*/hello/**", "/api/").permitAll()
-                .anyRequest().hasRole("USER")
+                .antMatchers(HttpMethod.GET,  "/api/").permitAll()
+                .anyRequest().hasRole("COMMON")
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);

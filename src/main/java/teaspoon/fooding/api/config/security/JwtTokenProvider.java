@@ -27,6 +27,7 @@ import java.util.List;
 public class JwtTokenProvider {
 
     private final CustomUserDetailsService customUserDetailsService;
+
     @Value("spring.jwt.secret")
     private String secretKey;
 
