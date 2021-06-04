@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import teaspoon.fooding.domain.user.UserRole;
 
 @RequiredArgsConstructor
 @Configuration
@@ -38,8 +39,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/*/signIn", "/*/signUp").permitAll()
-                .antMatchers(HttpMethod.GET,  "/api/").permitAll()
-                .anyRequest().hasRole("COMMON")
+                .antMatchers(HttpMethod.GET,  "/exception/**","/api/").permitAll()
+                .anyRequest().hasRole(UserRole.COMMON.name())
+                .and()
+                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);

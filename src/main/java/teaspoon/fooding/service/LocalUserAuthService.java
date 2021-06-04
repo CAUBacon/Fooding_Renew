@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import teaspoon.fooding.api.advice.exception.CAuthEmailNotFoundException;
+import teaspoon.fooding.api.advice.exception.CPasswordNotMatchException;
 import teaspoon.fooding.api.dto.LocalUserSignInDto;
 import teaspoon.fooding.api.dto.LocalUserSignUpDto;
 import teaspoon.fooding.domain.user.LocalUser;
@@ -27,9 +29,9 @@ public class LocalUserAuthService {
     }
 
     public LocalUser signIn(LocalUserSignInDto dto) {
-        LocalUser user = localUserRepository.findByEmail(dto.getEmail()).orElseThrow();
+        LocalUser user = localUserRepository.findByEmail(dto.getEmail()).orElseThrow(CAuthEmailNotFoundException::new);
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new IllegalStateException("Password Not match");
+            throw new CPasswordNotMatchException();
         }
         return user;
     }

@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import teaspoon.fooding.api.advice.exception.CAuthEmailNotFoundException;
 import teaspoon.fooding.service.CustomUserDetailsService;
 
 import javax.annotation.PostConstruct;
@@ -53,7 +54,7 @@ public class JwtTokenProvider {
             Long id = Long.parseLong(getUserId(token));
             UserDetails userDetails = customUserDetailsService.findById(id);
             return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | CAuthEmailNotFoundException e) {
             return null;
         }
     }
