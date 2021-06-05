@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.school;
 
+import lombok.Builder;
 import lombok.Getter;
 import teaspoon.fooding.domain.BaseEntity;
 import teaspoon.fooding.domain.BaseTimeEntity;
@@ -17,4 +18,12 @@ public class Position extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id")
     private School school;
+
+    private String name;
+
+    @Builder
+    public Position(School school, String name) {
+        this.school = school;
+        this.name = name;
+    }
 }
