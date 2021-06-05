@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 import teaspoon.fooding.api.advice.exception.CAuthEmailNotFoundException;
 import teaspoon.fooding.domain.user.Gender;
 import teaspoon.fooding.domain.user.LocalUser;
@@ -13,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SpringBootTest
+@Transactional
 class CustomUserDetailsServiceTest {
 
     @Autowired
