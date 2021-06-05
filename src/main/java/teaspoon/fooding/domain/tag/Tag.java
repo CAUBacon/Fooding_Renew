@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.tag;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -17,5 +18,26 @@ public class Tag extends BaseEntity {
     @Column(name = "tag_id")
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Builder
+    public Tag(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tag tag = (Tag) o;
+
+        return getName().equals(tag.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
 }

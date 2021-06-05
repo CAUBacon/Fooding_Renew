@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.tag;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -18,11 +19,25 @@ public class ShopTag extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
+    @Column(nullable = false)
     private Shop shop;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
+    @Column(nullable = false)
     private Tag tag;
 
+    @Column(nullable = false)
     private int count;
+
+    @Builder
+    public ShopTag(Shop shop, Tag tag) {
+        this.shop = shop;
+        this.tag = tag;
+        this.count = 1;
+    }
+
+    public void increaseCount() {
+        this.count += 1;
+    }
 }

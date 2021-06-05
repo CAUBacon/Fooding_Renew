@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
 import teaspoon.fooding.domain.category.ShopCategory;
-import teaspoon.fooding.domain.menu.MenuCategory;
-import teaspoon.fooding.domain.tag.ShopTag;
-import teaspoon.fooding.domain.image.MenuBoardImage;
 import teaspoon.fooding.domain.image.ShopImage;
-import teaspoon.fooding.domain.review.Review;
+import teaspoon.fooding.domain.menu.MenuCategory;
 import teaspoon.fooding.domain.school.School;
+import teaspoon.fooding.domain.tag.ShopTag;
 
 import javax.persistence.*;
 import java.util.List;
@@ -40,26 +38,34 @@ public abstract class Shop extends BaseEntity {
     @Embedded
     private Address address;
 
-//    @OneToMany(mappedBy = "shop")
-//    private List<ShopImage> images;
-//
+    @OneToMany(mappedBy = "shop")
+    private List<ShopImage> images;
+
 //    @OneToMany(mappedBy = "shop")
 //    private List<MenuBoardImage> menuBoardImages;
-//
-//    @OneToMany(mappedBy = "shop")
-//    private List<MenuCategory> menuCategories;
-//
+
+    @OneToMany(mappedBy = "shop")
+    private List<MenuCategory> menuCategories;
+
 //    @OneToMany(mappedBy = "shop")
 //    private List<Review> reviews;
 //
 //    @OneToMany(mappedBy = "shop")
 //    private List<ShopLike> likeUsers;
 //
-//    @OneToMany(mappedBy = "shop")
-//    private List<ShopTag> tags;
-//
-//    @OneToMany(mappedBy = "shop")
-//    private List<ShopCategory> categories;
+    @OneToMany(mappedBy = "shop")
+    private List<ShopTag> tags;
+
+    @OneToMany(mappedBy = "shop")
+    private List<ShopCategory> categories;
+
+    public Shop(String name, School school, String contact, String operationTime, Address address) {
+        this.name = name;
+        this.school = school;
+        this.contact = contact;
+        this.operationTime = operationTime;
+        this.address = address;
+    }
 
 
 }

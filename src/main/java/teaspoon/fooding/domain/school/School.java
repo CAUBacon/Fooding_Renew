@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.school;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -18,4 +19,9 @@ public class School extends BaseEntity {
     private Long id;
 
     private String name;
+
+    @Builder
+    public School(String name) {
+        this.name = name;
+    }
 }
