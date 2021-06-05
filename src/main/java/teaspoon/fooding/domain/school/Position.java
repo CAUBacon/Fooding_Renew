@@ -16,9 +16,10 @@ public class Position extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "school_id")
+    @JoinColumn(name = "school_id", nullable = false)
     private School school;
 
+    @Column(nullable = false)
     private String name;
 
     @Builder

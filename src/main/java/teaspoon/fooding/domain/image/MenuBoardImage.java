@@ -13,6 +13,6 @@ import javax.persistence.ManyToOne;
 public class MenuBoardImage extends Image{
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id")
+    @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 }

@@ -18,6 +18,7 @@ public class School extends BaseEntity {
     @Column(name = "school_id")
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Builder

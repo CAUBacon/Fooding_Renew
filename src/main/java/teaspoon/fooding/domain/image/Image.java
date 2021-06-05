@@ -16,6 +16,7 @@ public abstract class Image extends BaseEntity {
     @Column(name = "image_id")
     private Long id;
 
+    @Column(nullable = false)
     private String imageLink;
 
     @ManyToOne(fetch = FetchType.LAZY)

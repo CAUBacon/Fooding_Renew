@@ -6,6 +6,7 @@ import teaspoon.fooding.domain.BaseEntity;
 import teaspoon.fooding.domain.image.MenuImage;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,15 +19,17 @@ public class Menu extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_categiry_id")
+    @JoinColumn(name = "menu_categiry_id", nullable = false)
     private MenuCategory menuCategory;
 
     private int price;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String subTitle;
 
     @OneToMany(mappedBy = "menu")
-    private List<MenuImage> images;
+    private List<MenuImage> images = new ArrayList<>();;
 }

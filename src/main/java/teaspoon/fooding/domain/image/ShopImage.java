@@ -10,6 +10,6 @@ import javax.persistence.*;
 public class ShopImage extends Image{
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="shop_id")
+    @JoinColumn(name="shop_id", nullable = false)
     private Shop shop;
 }

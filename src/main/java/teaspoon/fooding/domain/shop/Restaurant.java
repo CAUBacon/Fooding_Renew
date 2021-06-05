@@ -9,6 +9,7 @@ import teaspoon.fooding.domain.school.School;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,7 +19,7 @@ import java.util.List;
 public class Restaurant extends Shop {
 
     @OneToMany(mappedBy = "restaurant")
-    private List<RestaurantIngredient> ingredients;
+    private List<RestaurantIngredient> ingredients = new ArrayList<>();;
 
     @Builder
     public Restaurant(String name, School school, String contact, String operationTime, Address address) {

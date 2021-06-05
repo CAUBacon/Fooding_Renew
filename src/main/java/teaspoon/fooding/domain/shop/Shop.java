@@ -28,14 +28,17 @@ public abstract class Shop extends BaseEntity {
     @Column(name = "shop_id")
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "school_id")
+    @JoinColumn(name = "school_id", nullable = false)
     private School school;
 
+    @Column(nullable = false)
     private String contact;
 
+    @Column(nullable = false)
     private String operationTime;
 
     @Embedded

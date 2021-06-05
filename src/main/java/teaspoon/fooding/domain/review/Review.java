@@ -8,6 +8,7 @@ import teaspoon.fooding.domain.shop.Shop;
 import teaspoon.fooding.domain.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,21 +20,23 @@ public class Review extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id")
+    @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
+    @Column(nullable = false)
     private String content;
 
-    private Double score;
+    @Column(nullable = false)
+    private double score;
 
     @OneToMany(mappedBy = "review")
-    private List<ReviewImage> images;
+    private List<ReviewImage> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "review")
-    private List<ReviewTag> tags;
+    private List<ReviewTag> tags = new ArrayList<>();
 
 }
