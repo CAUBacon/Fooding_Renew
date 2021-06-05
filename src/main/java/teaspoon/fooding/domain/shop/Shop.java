@@ -8,9 +8,12 @@ import teaspoon.fooding.domain.image.ShopImage;
 import teaspoon.fooding.domain.menu.MenuCategory;
 import teaspoon.fooding.domain.school.School;
 import teaspoon.fooding.domain.tag.ShopTag;
+import teaspoon.fooding.domain.tag.Tag;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Getter
@@ -39,13 +42,13 @@ public abstract class Shop extends BaseEntity {
     private Address address;
 
     @OneToMany(mappedBy = "shop")
-    private List<ShopImage> images;
+    private List<ShopImage> images = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "shop")
 //    private List<MenuBoardImage> menuBoardImages;
 
     @OneToMany(mappedBy = "shop")
-    private List<MenuCategory> menuCategories;
+    private List<MenuCategory> menuCategories = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "shop")
 //    private List<Review> reviews;
@@ -54,10 +57,10 @@ public abstract class Shop extends BaseEntity {
 //    private List<ShopLike> likeUsers;
 //
     @OneToMany(mappedBy = "shop")
-    private List<ShopTag> tags;
+    private List<ShopTag> tags= new ArrayList<>();
 
     @OneToMany(mappedBy = "shop")
-    private List<ShopCategory> categories;
+    private List<ShopCategory> categories  = new ArrayList<>();
 
     public Shop(String name, School school, String contact, String operationTime, Address address) {
         this.name = name;
@@ -67,5 +70,15 @@ public abstract class Shop extends BaseEntity {
         this.address = address;
     }
 
-
+    public void addTag(Tag tag) {
+        Optional<ShopTag> sameTag = tags.stream().filter(st -> st.getTag().equals(tag)).findFirst();
+        sameTag.ifPresentOrElse(ShopTag::increaseCount, () -> {
+            this.tags.add(
+                    ShopTag.builder()
+                            .shop(this)
+                            .tag(tag)
+                            .build()
+            );
+        });
+    }
 }
