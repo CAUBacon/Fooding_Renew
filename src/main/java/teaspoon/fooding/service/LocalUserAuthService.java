@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import teaspoon.fooding.api.advice.exception.CAuthEmailNotFoundException;
 import teaspoon.fooding.api.advice.exception.CEmailDuplicatedException;
+import teaspoon.fooding.api.advice.exception.CNicknameDuplicatedException;
 import teaspoon.fooding.api.advice.exception.CPasswordNotMatchException;
 import teaspoon.fooding.api.dto.LocalUserSignInDto;
 import teaspoon.fooding.api.dto.LocalUserSignUpDto;
@@ -28,6 +29,9 @@ public class LocalUserAuthService {
 
         if (localUserRepository.existsByEmail(localUser.getEmail())) {
             throw new CEmailDuplicatedException();
+        }
+        if (userRepository.existsByNickname(localUser.getNickname())) {
+            throw new CNicknameDuplicatedException();
         }
 
         localUser.encodePassword(passwordEncoder);

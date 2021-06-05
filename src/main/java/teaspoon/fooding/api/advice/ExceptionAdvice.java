@@ -6,10 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import teaspoon.fooding.api.advice.exception.CAuthEmailNotFoundException;
-import teaspoon.fooding.api.advice.exception.CAuthenticationEntryPointException;
-import teaspoon.fooding.api.advice.exception.CEmailDuplicatedException;
-import teaspoon.fooding.api.advice.exception.CPasswordNotMatchException;
+import teaspoon.fooding.api.advice.exception.*;
 import teaspoon.fooding.api.dto.CommonResult;
 import teaspoon.fooding.service.ResponseService;
 
@@ -50,5 +47,10 @@ public class ExceptionAdvice {
     @ExceptionHandler(CEmailDuplicatedException.class)
     protected ResponseEntity<CommonResult> emailDuplicatedException(CEmailDuplicatedException e) {
         return responseService.makeFailResponse(HttpStatus.BAD_REQUEST, 4001, "해당 이메일로 가입한 사용자가 이미 존재합니다");
+    }
+
+    @ExceptionHandler(CNicknameDuplicatedException.class)
+    protected ResponseEntity<CommonResult> nicknameDuplicatedException(CNicknameDuplicatedException e) {
+        return responseService.makeFailResponse(HttpStatus.BAD_REQUEST, 4002, "해당 닉네임으로 가입한 사용자가 이미 존재합니다");
     }
 }

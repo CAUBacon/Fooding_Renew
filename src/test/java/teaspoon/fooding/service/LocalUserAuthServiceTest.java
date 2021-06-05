@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import teaspoon.fooding.api.advice.exception.CEmailDuplicatedException;
+import teaspoon.fooding.api.advice.exception.CNicknameDuplicatedException;
 import teaspoon.fooding.api.dto.LocalUserSignUpDto;
 import teaspoon.fooding.domain.user.Gender;
 import teaspoon.fooding.domain.user.LocalUser;
@@ -31,6 +32,17 @@ class LocalUserAuthServiceTest {
         Throwable throwable = catchThrowable(() -> localUserAuthService.signUp(userDto));
         // then
         assertThat(throwable).isInstanceOf(CEmailDuplicatedException.class);
+    }
+
+    @Test
+    void signUp_이미_같은_닉네임으로_가입한_사용자가_존재하면_CNicknameDuplicatedException를_던진다() {
+        // given
+        LocalUserSignUpDto userDto = new LocalUserSignUpDto("test@naver.com", "1234", "name", Gender.FEMALE);
+        // when
+        localUserRepository.save(new LocalUser("name", Gender.MALE, "another@naver.com", "asdf"));
+        Throwable throwable = catchThrowable(() -> localUserAuthService.signUp(userDto));
+        // then
+        assertThat(throwable).isInstanceOf(CNicknameDuplicatedException.class);
     }
 
     @Test
