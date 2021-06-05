@@ -18,13 +18,11 @@ public class ShopTag extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "tag_id", nullable = false)
     private Tag tag;
 
     @Column(nullable = false)
