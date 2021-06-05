@@ -16,5 +16,5 @@ import java.util.List;
 public class Restaurant extends Shop {
 
     @OneToMany(mappedBy = "restaurant")
-    private List<ShopIngredient> ingredients;
+    private List<RestaurantIngredient> ingredients;
 }

@@ -6,9 +6,9 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-public class ShopIngredient {
+public class RestaurantIngredient {
     @Id @GeneratedValue
-    @Column(name = "shop_ingredient_id")
+    @Column(name = "restaurant_ingredient_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
