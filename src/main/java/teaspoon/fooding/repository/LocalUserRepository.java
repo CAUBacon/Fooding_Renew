@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface LocalUserRepository extends JpaRepository<LocalUser, Long> {
     @EntityGraph(attributePaths = {"roles"})
     Optional<LocalUser> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
 }

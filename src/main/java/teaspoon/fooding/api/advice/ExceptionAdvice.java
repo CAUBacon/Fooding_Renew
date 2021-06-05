@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import teaspoon.fooding.api.advice.exception.CAuthEmailNotFoundException;
 import teaspoon.fooding.api.advice.exception.CAuthenticationEntryPointException;
+import teaspoon.fooding.api.advice.exception.CEmailDuplicatedException;
 import teaspoon.fooding.api.advice.exception.CPasswordNotMatchException;
 import teaspoon.fooding.api.dto.CommonResult;
 import teaspoon.fooding.service.ResponseService;
@@ -44,5 +45,10 @@ public class ExceptionAdvice {
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<CommonResult> accessDeniedException(AccessDeniedException e) {
         return responseService.makeFailResponse(HttpStatus.FORBIDDEN, 4030, "해당 리소스에 접근할 수 없습니다");
+    }
+
+    @ExceptionHandler(CEmailDuplicatedException.class)
+    protected ResponseEntity<CommonResult> emailDuplicatedException(CEmailDuplicatedException e) {
+        return responseService.makeFailResponse(HttpStatus.BAD_REQUEST, 4001, "해당 이메일로 가입한 사용자가 이미 존재합니다");
     }
 }
