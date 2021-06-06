@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
 import teaspoon.fooding.domain.category.ShopCategory;
 import teaspoon.fooding.domain.image.ShopImage;
+import teaspoon.fooding.domain.menu.Menu;
 import teaspoon.fooding.domain.menu.MenuCategory;
 import teaspoon.fooding.domain.school.School;
 import teaspoon.fooding.domain.tag.ShopTag;
@@ -61,7 +62,7 @@ public abstract class Shop extends BaseEntity {
 //    @OneToMany(mappedBy = "shop")
 //    private List<ShopLike> likeUsers;
 //
-    @OneToMany(mappedBy = "shop")
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     private List<ShopTag> tags = new ArrayList<>();
 
     @OneToMany(mappedBy = "shop")
@@ -86,6 +87,15 @@ public abstract class Shop extends BaseEntity {
                                 .build()
                 );
             });
+        });
+    }
+
+    public void addMenu(MenuCategory menuCategory, Menu... newMenus) {
+        if (menuCategory.getShop() != this) {
+            throw new IllegalStateException();
+        }
+        Arrays.stream(newMenus).forEach(newMenu -> {
+            newMenu.setMenuCategory(menuCategory);
         });
     }
 

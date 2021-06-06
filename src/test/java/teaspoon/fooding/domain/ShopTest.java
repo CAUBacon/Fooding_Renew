@@ -1,6 +1,8 @@
 package teaspoon.fooding.domain;
 
 import org.junit.jupiter.api.Test;
+import teaspoon.fooding.domain.menu.Menu;
+import teaspoon.fooding.domain.menu.MenuCategory;
 import teaspoon.fooding.domain.school.Position;
 import teaspoon.fooding.domain.school.School;
 import teaspoon.fooding.domain.shop.Address;
@@ -26,6 +28,12 @@ public class ShopTest {
                     .school(school)
                     .build();
     Tag tag = Tag.builder().name("맛집").build();
+
+    Menu menu1 = Menu.builder().title("A").subTitle("sA").price(1000).build();
+    Menu menu2 = Menu.builder().title("B").subTitle("sB").price(3000).build();
+    Menu menu3 = Menu.builder().title("C").subTitle("sC").price(2000).build();
+    MenuCategory menuCategory1 = MenuCategory.builder().name("가").shop(shop).build();
+    MenuCategory menuCategory2 = MenuCategory.builder().name("나").shop(shop).build();
 
     @Test
     void addTag_새로운_태그라면_ShopTag를_새로_만들고_count를_1로_설정한다() {
@@ -83,5 +91,38 @@ public class ShopTest {
         assertThat(tags.size()).isEqualTo(2);
         assertThat(shop.getTags()).extracting("count").containsExactly(2L, 1L);
         assertThat(shop.getTags()).extracting("tag").containsExactly(tag, anotherTag);
+    }
+
+    @Test
+    void addMenu_메뉴카테고리를_가지고있지_않던_메뉴를_추가한다() {
+        // given
+        // when
+        shop.addMenu(menuCategory1, menu1);
+
+        // then
+        assertThat(menuCategory1.getMenus().size()).isEqualTo(1);
+        assertThat(menuCategory1.getMenus()).contains(menu1);
+
+        assertThat(menu1.getMenuCategory()).isEqualTo(menuCategory1);
+    }
+
+    @Test
+    void addMenu_메뉴카테고리를_가지고_있던_메뉴를_추가한다() {
+        // given
+        menu1.setMenuCategory(menuCategory2);
+        menu2.setMenuCategory(menuCategory2);
+        // when
+        shop.addMenu(menuCategory1, menu1);
+        shop.addMenu(menuCategory2, menu3);
+
+        // then
+        assertThat(menuCategory1.getMenus().size()).isEqualTo(1);
+        assertThat(menuCategory1.getMenus()).contains(menu1);
+        assertThat(menuCategory2.getMenus().size()).isEqualTo(2);
+        assertThat(menuCategory2.getMenus()).contains(menu2, menu3);
+
+        assertThat(menu1.getMenuCategory()).isEqualTo(menuCategory1);
+        assertThat(menu2.getMenuCategory()).isEqualTo(menuCategory2);
+        assertThat(menu3.getMenuCategory()).isEqualTo(menuCategory2);
     }
 }
