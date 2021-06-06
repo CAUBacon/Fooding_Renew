@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.shop;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "type")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
@@ -86,5 +87,21 @@ public abstract class Shop extends BaseEntity {
                 );
             });
         });
+    }
+
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", school=" + school +
+                ", contact='" + contact + '\'' +
+                ", operationTime='" + operationTime + '\'' +
+                ", address=" + address +
+                ", images=" + images +
+                ", menuCategories=" + menuCategories +
+                ", tags=" + tags +
+                ", categories=" + categories +
+                '}';
     }
 }

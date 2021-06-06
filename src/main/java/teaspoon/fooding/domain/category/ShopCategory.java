@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.category;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class ShopCategory extends BaseEntity {
     @Id @GeneratedValue

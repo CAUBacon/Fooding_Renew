@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.tag;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import teaspoon.fooding.domain.shop.Shop;
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class ShopTag extends BaseEntity {
 

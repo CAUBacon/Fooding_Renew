@@ -1,11 +1,12 @@
 package teaspoon.fooding.domain.shop;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.school.Position;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class Address {
 

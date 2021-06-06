@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.tag;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -8,7 +9,7 @@ import teaspoon.fooding.domain.review.Review;
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class ReviewTag extends BaseEntity {
     @Id

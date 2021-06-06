@@ -1,10 +1,12 @@
 package teaspoon.fooding.domain.review;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
-import teaspoon.fooding.domain.tag.ReviewTag;
 import teaspoon.fooding.domain.image.ReviewImage;
 import teaspoon.fooding.domain.shop.Shop;
+import teaspoon.fooding.domain.tag.ReviewTag;
 import teaspoon.fooding.domain.user.User;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Review extends BaseEntity {
     @Id

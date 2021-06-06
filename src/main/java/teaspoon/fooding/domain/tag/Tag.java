@@ -1,5 +1,6 @@
 package teaspoon.fooding.domain.tag;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Tag extends BaseEntity {
     @Id @GeneratedValue

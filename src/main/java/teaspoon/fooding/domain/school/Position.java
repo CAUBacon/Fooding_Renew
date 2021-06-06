@@ -1,12 +1,14 @@
 package teaspoon.fooding.domain.school;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
-import teaspoon.fooding.domain.BaseTimeEntity;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class Position extends BaseEntity {
