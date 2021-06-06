@@ -71,4 +71,17 @@ public class ShopTest {
         assertThat(shop.getTags()).extracting("count").containsExactly(1L, 1L);
         assertThat(shop.getTags()).extracting("tag").containsExactly(tag, anotherTag);
     }
+
+    @Test
+    void addTag_한번에_여러_태그를_추가할_수_있다() {
+        Tag anotherTag = Tag.builder().name("가성비").build();
+
+        // when
+        shop.addTag(tag, tag, anotherTag);
+        List<ShopTag> tags = shop.getTags();
+        // then
+        assertThat(tags.size()).isEqualTo(2);
+        assertThat(shop.getTags()).extracting("count").containsExactly(2L, 1L);
+        assertThat(shop.getTags()).extracting("tag").containsExactly(tag, anotherTag);
+    }
 }

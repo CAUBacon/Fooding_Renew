@@ -12,6 +12,7 @@ import teaspoon.fooding.domain.tag.Tag;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,17 +54,17 @@ public abstract class Shop extends BaseEntity {
     @OneToMany(mappedBy = "shop")
     private List<MenuCategory> menuCategories = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "shop")
+    //    @OneToMany(mappedBy = "shop")
 //    private List<Review> reviews;
 //
 //    @OneToMany(mappedBy = "shop")
 //    private List<ShopLike> likeUsers;
 //
     @OneToMany(mappedBy = "shop")
-    private List<ShopTag> tags= new ArrayList<>();
+    private List<ShopTag> tags = new ArrayList<>();
 
     @OneToMany(mappedBy = "shop")
-    private List<ShopCategory> categories  = new ArrayList<>();
+    private List<ShopCategory> categories = new ArrayList<>();
 
     public Shop(String name, School school, String contact, String operationTime, Address address) {
         this.name = name;
@@ -73,15 +74,17 @@ public abstract class Shop extends BaseEntity {
         this.address = address;
     }
 
-    public void addTag(Tag tag) {
-        Optional<ShopTag> sameTag = tags.stream().filter(st -> st.getTag().equals(tag)).findFirst();
-        sameTag.ifPresentOrElse(ShopTag::increaseCount, () -> {
-            this.tags.add(
-                    ShopTag.builder()
-                            .shop(this)
-                            .tag(tag)
-                            .build()
-            );
+    public void addTag(Tag... newTags) {
+        Arrays.stream(newTags).forEach(newTag -> {
+            Optional<ShopTag> sameTag = this.tags.stream().filter(st -> st.getTag().equals(newTag)).findFirst();
+            sameTag.ifPresentOrElse(ShopTag::increaseCount, () -> {
+                this.tags.add(
+                        ShopTag.builder()
+                                .shop(this)
+                                .tag(newTag)
+                                .build()
+                );
+            });
         });
     }
 }
