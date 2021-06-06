@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-@Profile({"local", "test"})
+@Profile({"local"})
 public class H2ServerConfiguration {
 
     @Bean

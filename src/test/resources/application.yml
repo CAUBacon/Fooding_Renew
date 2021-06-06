@@ -3,12 +3,10 @@ spring:
     include: secret
     active: test
   datasource:
-    platform: h2
-    hikari:
-      driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:tcp://localhost:9092/mem:fooding
-      username: sa
-      password:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   jpa:
     open-in-view: false

@@ -68,7 +68,7 @@ public class ShopTest {
         List<ShopTag> tags = shop.getTags();
         // then
         assertThat(tags.size()).isEqualTo(2);
-        assertThat(shop.getTags()).extracting("count").containsExactly(1, 1);
+        assertThat(shop.getTags()).extracting("count").containsExactly(1L, 1L);
         assertThat(shop.getTags()).extracting("tag").containsExactly(tag, anotherTag);
     }
 }
