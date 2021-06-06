@@ -1,13 +1,10 @@
-package teaspoon.fooding.domain;
+package teaspoon.fooding.domain.shop;
 
 import org.junit.jupiter.api.Test;
 import teaspoon.fooding.domain.menu.Menu;
 import teaspoon.fooding.domain.menu.MenuCategory;
 import teaspoon.fooding.domain.school.Position;
 import teaspoon.fooding.domain.school.School;
-import teaspoon.fooding.domain.shop.Address;
-import teaspoon.fooding.domain.shop.Restaurant;
-import teaspoon.fooding.domain.shop.Shop;
 import teaspoon.fooding.domain.tag.ShopTag;
 import teaspoon.fooding.domain.tag.Tag;
 

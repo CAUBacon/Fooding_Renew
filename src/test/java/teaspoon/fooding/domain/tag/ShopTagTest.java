@@ -1,4 +1,4 @@
-package teaspoon.fooding.domain;
+package teaspoon.fooding.domain.tag;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,6 @@ import teaspoon.fooding.domain.school.School;
 import teaspoon.fooding.domain.shop.Address;
 import teaspoon.fooding.domain.shop.Restaurant;
 import teaspoon.fooding.domain.shop.Shop;
-import teaspoon.fooding.domain.tag.ShopTag;
-import teaspoon.fooding.domain.tag.Tag;
 
 public class ShopTagTest {
 
