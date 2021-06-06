@@ -26,13 +26,13 @@ public class ShopTag extends BaseEntity {
     private Tag tag;
 
     @Column(nullable = false)
-    private int count;
+    private Long count;
 
     @Builder
     public ShopTag(Shop shop, Tag tag) {
         this.shop = shop;
         this.tag = tag;
-        this.count = 1;
+        this.count = 1L;
     }
 
     public void increaseCount() {
