@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
 import teaspoon.fooding.domain.image.MenuImage;
+import teaspoon.fooding.domain.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 public class Menu extends BaseEntity {
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private final List<MenuImage> images = new ArrayList<>();
     @Id
     @GeneratedValue
@@ -56,6 +57,15 @@ public class Menu extends BaseEntity {
         if (menuCategory != null) {
             menuCategory.getMenus().add(this);
         }
+    }
+
+    public void addImage(User uploader, String imageLink) {
+        MenuImage newImage = MenuImage.builder()
+                .menu(this)
+                .imageLink(imageLink)
+                .uploader(uploader)
+                .build();
+        this.getImages().add(newImage);
     }
 
 }

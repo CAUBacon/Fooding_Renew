@@ -6,6 +6,8 @@ import teaspoon.fooding.domain.school.School;
 import teaspoon.fooding.domain.shop.Address;
 import teaspoon.fooding.domain.shop.Restaurant;
 import teaspoon.fooding.domain.shop.Shop;
+import teaspoon.fooding.domain.user.Gender;
+import teaspoon.fooding.domain.user.LocalUser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -109,5 +111,23 @@ class MenuTest {
 
         assertThat(menuCategory1.getMenus()).contains(menu1, menu2);
         assertThat(menuCategory2.getMenus()).contains(menu3);
+    }
+
+    @Test
+    void addImage_MenuImage를_만든다() {
+        // given
+        LocalUser uploader = LocalUser.builder()
+                .nickname("홍길동")
+                .password("1234")
+                .email("test@naver.com")
+                .gender(Gender.FEMALE)
+                .build();
+        String imageLink = "image.com";
+        // when
+        menu1.addImage(uploader, imageLink);
+        // then
+        assertThat(menu1.getImages().size()).isEqualTo(1);
+        assertThat(menu1.getImages()).extracting("imageLink").contains(imageLink);
+        assertThat(menu1.getImages()).extracting("uploader").contains(uploader);
     }
 }
