@@ -59,7 +59,7 @@ public abstract class Shop extends BaseEntity {
     @Embedded
     private Address address;
     @OneToMany(mappedBy = "shop")
-    private List<MenuBoardImage> menuBoardImages;
+    private final List<MenuBoardImage> menuBoardImages = new ArrayList<>();
 
 
     public Shop(String name, School school, String contact, String operationTime, Address address) {
@@ -110,6 +110,15 @@ public abstract class Shop extends BaseEntity {
                 .uploader(uploader)
                 .build();
         this.getImages().add(newImage);
+    }
+
+    public void addMenuBoardImage(User uploader, String imageLink) {
+        MenuBoardImage newImage = MenuBoardImage.builder()
+                .shop(this)
+                .imageLink(imageLink)
+                .uploader(uploader)
+                .build();
+        this.getMenuBoardImages().add(newImage);
     }
 
     @Override

@@ -160,4 +160,22 @@ public class ShopTest {
         assertThat(shop.getImages()).extracting("imageLink").contains(imageLink);
         assertThat(shop.getImages()).extracting("uploader").contains(uploader);
     }
+
+    @Test
+    void addMenuBoardImage_MenuBoardImage를_만든다() {
+        // given
+        LocalUser uploader = LocalUser.builder()
+                .nickname("홍길동")
+                .password("1234")
+                .email("test@naver.com")
+                .gender(Gender.FEMALE)
+                .build();
+        String imageLink = "image.com";
+        // when
+        shop.addMenuBoardImage(uploader, imageLink);
+        // then
+        assertThat(shop.getMenuBoardImages().size()).isEqualTo(1);
+        assertThat(shop.getMenuBoardImages()).extracting("imageLink").contains(imageLink);
+        assertThat(shop.getMenuBoardImages()).extracting("uploader").contains(uploader);
+    }
 }
