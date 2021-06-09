@@ -16,35 +16,33 @@ import java.util.List;
 @Entity
 public class Menu extends BaseEntity {
 
+    @OneToMany(mappedBy = "menu")
+    private final List<MenuImage> images = new ArrayList<>();
     @Id
     @GeneratedValue
     @Column(name = "menu_id")
     private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_category_id", nullable = false)
     private MenuCategory menuCategory;
-
     private int price;
-
     @Column(nullable = false)
     private String title;
-
     @Column(nullable = false)
     private String subTitle;
 
-    @OneToMany(mappedBy = "menu")
-    private final List<MenuImage> images = new ArrayList<>();
-
-    @Builder
     public Menu(int price, String title, String subTitle) {
         this.price = price;
         this.title = title;
         this.subTitle = subTitle;
     }
 
+    @Builder
     public Menu(MenuCategory menuCategory, int price, String title, String subTitle) {
         this.menuCategory = menuCategory;
+        if (menuCategory != null) {
+            menuCategory.getMenus().add(this);
+        }
         this.price = price;
         this.title = title;
         this.subTitle = subTitle;

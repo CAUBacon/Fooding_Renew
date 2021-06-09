@@ -29,6 +29,37 @@ class MenuTest {
     MenuCategory menuCategory2 = MenuCategory.builder().name("나").shop(shop).build();
 
     @Test
+    void constructor_menuCategory를_전달하면_정상적으로_설정된다() {
+        // given
+        // when
+        Menu menu = Menu.builder()
+                .title("국밥")
+                .subTitle("뜨끈한 밥")
+                .price(3000)
+                .menuCategory(menuCategory1)
+                .build();
+
+        // then
+        assertThat(menu.getMenuCategory()).isEqualTo(menuCategory1);
+        assertThat(menuCategory1.getMenus()).contains(menu);
+    }
+
+    @Test
+    void constructor_menuCategory를_전달하지_않으면_MenuCategory가_없는_메뉴가_만들어진다() {
+        // given
+        // when
+        Menu menu = Menu.builder()
+                .title("국밥")
+                .subTitle("뜨끈한 밥")
+                .price(3000)
+                .build();
+
+        // then
+        assertThat(menu.getMenuCategory()).isNull();
+        assertThat(menuCategory1.getMenus()).doesNotContain(menu);
+    }
+
+    @Test
     void setMenuCategory_카테고리가_없던_메뉴에_메뉴_카테고리를_설정한다() {
         // given
 
