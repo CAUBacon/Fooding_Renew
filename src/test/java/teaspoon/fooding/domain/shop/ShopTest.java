@@ -8,6 +8,8 @@ import teaspoon.fooding.domain.school.Position;
 import teaspoon.fooding.domain.school.School;
 import teaspoon.fooding.domain.tag.ShopTag;
 import teaspoon.fooding.domain.tag.Tag;
+import teaspoon.fooding.domain.user.Gender;
+import teaspoon.fooding.domain.user.LocalUser;
 
 import java.util.List;
 
@@ -139,5 +141,23 @@ public class ShopTest {
         // then
         assertThat(shop.getCategories().size()).isEqualTo(2);
         assertThat(shop.getCategories()).extracting("category").contains(category1, category2);
+    }
+
+    @Test
+    void addShopImage_ShopImage를_만든다() {
+        // given
+        LocalUser uploader = LocalUser.builder()
+                .nickname("홍길동")
+                .password("1234")
+                .email("test@naver.com")
+                .gender(Gender.FEMALE)
+                .build();
+        String imageLink = "image.com";
+        // when
+        shop.addShopImage(uploader, imageLink);
+        // then
+        assertThat(shop.getImages().size()).isEqualTo(1);
+        assertThat(shop.getImages()).extracting("imageLink").contains(imageLink);
+        assertThat(shop.getImages()).extracting("uploader").contains(uploader);
     }
 }

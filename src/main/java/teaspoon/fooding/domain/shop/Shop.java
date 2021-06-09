@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
 import teaspoon.fooding.domain.category.Category;
 import teaspoon.fooding.domain.category.ShopCategory;
+import teaspoon.fooding.domain.image.MenuBoardImage;
 import teaspoon.fooding.domain.image.ShopImage;
 import teaspoon.fooding.domain.menu.Menu;
 import teaspoon.fooding.domain.menu.MenuCategory;
 import teaspoon.fooding.domain.school.School;
 import teaspoon.fooding.domain.tag.ShopTag;
 import teaspoon.fooding.domain.tag.Tag;
+import teaspoon.fooding.domain.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,20 +28,13 @@ import java.util.Optional;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public abstract class Shop extends BaseEntity {
-
-    @OneToMany(mappedBy = "shop")
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     private final List<ShopImage> images = new ArrayList<>();
     @OneToMany(mappedBy = "shop")
     private final List<MenuCategory> menuCategories = new ArrayList<>();
-    //    @OneToMany(mappedBy = "shop")
-//    private List<Review> reviews;
-//
-//    @OneToMany(mappedBy = "shop")
-//    private List<ShopLike> likeUsers;
-//
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     private final List<ShopTag> tags = new ArrayList<>();
-    @OneToMany(mappedBy = "shop")
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     private final List<ShopCategory> categories = new ArrayList<>();
     @Id
     @GeneratedValue
@@ -50,15 +45,22 @@ public abstract class Shop extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id", nullable = false)
     private School school;
-
-    //    @OneToMany(mappedBy = "shop")
-//    private List<MenuBoardImage> menuBoardImages;
     @Column(nullable = false)
     private String contact;
     @Column(nullable = false)
     private String operationTime;
+
+    //    @OneToMany(mappedBy = "shop")
+//    private List<Review> reviews;
+
+//    @OneToMany(mappedBy = "shop")
+//    private List<ShopLike> likeUsers;
+
     @Embedded
     private Address address;
+    @OneToMany(mappedBy = "shop")
+    private List<MenuBoardImage> menuBoardImages;
+
 
     public Shop(String name, School school, String contact, String operationTime, Address address) {
         this.name = name;
@@ -99,6 +101,15 @@ public abstract class Shop extends BaseEntity {
         Arrays.stream(newMenus).forEach(newMenu -> {
             newMenu.setMenuCategory(menuCategory);
         });
+    }
+
+    public void addShopImage(User uploader, String imageLink) {
+        ShopImage newImage = ShopImage.builder()
+                .shop(this)
+                .imageLink(imageLink)
+                .uploader(uploader)
+                .build();
+        this.getImages().add(newImage);
     }
 
     @Override
