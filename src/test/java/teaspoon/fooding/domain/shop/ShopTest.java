@@ -1,6 +1,7 @@
 package teaspoon.fooding.domain.shop;
 
 import org.junit.jupiter.api.Test;
+import teaspoon.fooding.domain.category.Category;
 import teaspoon.fooding.domain.menu.Menu;
 import teaspoon.fooding.domain.menu.MenuCategory;
 import teaspoon.fooding.domain.school.Position;
@@ -121,5 +122,22 @@ public class ShopTest {
         assertThat(menu1.getMenuCategory()).isEqualTo(menuCategory1);
         assertThat(menu2.getMenuCategory()).isEqualTo(menuCategory2);
         assertThat(menu3.getMenuCategory()).isEqualTo(menuCategory2);
+    }
+
+    @Test
+    void addCategories_ShopCategory를_만들어_shop에_추가한다() {
+        // given
+        Category category1 = Category.builder()
+                .name("한식")
+                .build();
+        Category category2 = Category.builder()
+                .name("양식")
+                .build();
+        // when
+        shop.addCategories(category1, category2);
+
+        // then
+        assertThat(shop.getCategories().size()).isEqualTo(2);
+        assertThat(shop.getCategories()).extracting("category").contains(category1, category2);
     }
 }

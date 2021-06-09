@@ -1,6 +1,7 @@
 package teaspoon.fooding.domain.category;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -24,4 +25,10 @@ public class ShopCategory extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    @Builder
+    public ShopCategory(Shop shop, Category category) {
+        this.shop = shop;
+        this.category = category;
+    }
 }

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
+import teaspoon.fooding.domain.category.Category;
 import teaspoon.fooding.domain.category.ShopCategory;
 import teaspoon.fooding.domain.image.ShopImage;
 import teaspoon.fooding.domain.menu.Menu;
@@ -26,36 +27,10 @@ import java.util.Optional;
 @Entity
 public abstract class Shop extends BaseEntity {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "shop_id")
-    private Long id;
-
-    @Column(nullable = false)
-    private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "school_id", nullable = false)
-    private School school;
-
-    @Column(nullable = false)
-    private String contact;
-
-    @Column(nullable = false)
-    private String operationTime;
-
-    @Embedded
-    private Address address;
-
     @OneToMany(mappedBy = "shop")
-    private List<ShopImage> images = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "shop")
-//    private List<MenuBoardImage> menuBoardImages;
-
+    private final List<ShopImage> images = new ArrayList<>();
     @OneToMany(mappedBy = "shop")
-    private List<MenuCategory> menuCategories = new ArrayList<>();
-
+    private final List<MenuCategory> menuCategories = new ArrayList<>();
     //    @OneToMany(mappedBy = "shop")
 //    private List<Review> reviews;
 //
@@ -63,10 +38,27 @@ public abstract class Shop extends BaseEntity {
 //    private List<ShopLike> likeUsers;
 //
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
-    private List<ShopTag> tags = new ArrayList<>();
-
+    private final List<ShopTag> tags = new ArrayList<>();
     @OneToMany(mappedBy = "shop")
-    private List<ShopCategory> categories = new ArrayList<>();
+    private final List<ShopCategory> categories = new ArrayList<>();
+    @Id
+    @GeneratedValue
+    @Column(name = "shop_id")
+    private Long id;
+    @Column(nullable = false)
+    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "school_id", nullable = false)
+    private School school;
+
+    //    @OneToMany(mappedBy = "shop")
+//    private List<MenuBoardImage> menuBoardImages;
+    @Column(nullable = false)
+    private String contact;
+    @Column(nullable = false)
+    private String operationTime;
+    @Embedded
+    private Address address;
 
     public Shop(String name, School school, String contact, String operationTime, Address address) {
         this.name = name;
@@ -74,6 +66,16 @@ public abstract class Shop extends BaseEntity {
         this.contact = contact;
         this.operationTime = operationTime;
         this.address = address;
+    }
+
+    public void addCategories(Category... categories) {
+        Arrays.stream(categories).forEach(category -> {
+            ShopCategory newShopCategory = ShopCategory.builder()
+                    .category(category)
+                    .shop(this)
+                    .build();
+            this.categories.add(newShopCategory);
+        });
     }
 
     public void addTag(Tag... newTags) {

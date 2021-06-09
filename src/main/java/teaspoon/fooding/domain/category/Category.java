@@ -1,6 +1,7 @@
 package teaspoon.fooding.domain.category;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -14,9 +15,15 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Category extends BaseEntity {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "category_id")
     private Long id;
 
     private String name;
+
+    @Builder
+    public Category(String name) {
+        this.name = name;
+    }
 }
