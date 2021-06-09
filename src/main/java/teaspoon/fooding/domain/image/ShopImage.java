@@ -1,21 +1,27 @@
 package teaspoon.fooding.domain.image;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.shop.Shop;
+import teaspoon.fooding.domain.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorValue("shop")
 @Entity
-public class ShopImage extends Image{
+public class ShopImage extends Image {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="shop_id", nullable = false)
+    @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
+
+    @Builder
+    public ShopImage(String imageLink, User uploader, Shop shop) {
+        super(imageLink, uploader);
+        this.shop = shop;
+    }
 }
