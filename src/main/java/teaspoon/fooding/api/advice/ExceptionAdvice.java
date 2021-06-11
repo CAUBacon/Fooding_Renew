@@ -58,4 +58,9 @@ public class ExceptionAdvice {
     protected ResponseEntity<CommonResult> restaurantNotFoundException(CRestaurantNotFoundException e) {
         return responseService.makeFailResponse(HttpStatus.NOT_FOUND, 4040, "가게를 찾을 수 없습니다");
     }
+
+    @ExceptionHandler(CShopLikeDuplicatedException.class)
+    protected ResponseEntity<CommonResult> shopLikeDuplicatedException(CShopLikeDuplicatedException e) {
+        return responseService.makeFailResponse(HttpStatus.BAD_REQUEST, 4003, "이미 좋아요를 누른 가게입니다");
+    }
 }
