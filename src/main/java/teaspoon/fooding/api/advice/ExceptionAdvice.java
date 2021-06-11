@@ -53,4 +53,9 @@ public class ExceptionAdvice {
     protected ResponseEntity<CommonResult> nicknameDuplicatedException(CNicknameDuplicatedException e) {
         return responseService.makeFailResponse(HttpStatus.BAD_REQUEST, 4002, "해당 닉네임으로 가입한 사용자가 이미 존재합니다");
     }
+
+    @ExceptionHandler(CRestaurantNotFoundException.class)
+    protected ResponseEntity<CommonResult> restaurantNotFoundException(CRestaurantNotFoundException e) {
+        return responseService.makeFailResponse(HttpStatus.NOT_FOUND, 4040, "가게를 찾을 수 없습니다");
+    }
 }
