@@ -28,14 +28,6 @@ import java.util.Optional;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public abstract class Shop extends BaseEntity {
-    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
-    private final List<ShopImage> images = new ArrayList<>();
-    @OneToMany(mappedBy = "shop")
-    private final List<MenuCategory> menuCategories = new ArrayList<>();
-    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
-    private final List<ShopTag> tags = new ArrayList<>();
-    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
-    private final List<ShopCategory> categories = new ArrayList<>();
     @Id
     @GeneratedValue
     @Column(name = "shop_id")
@@ -49,6 +41,14 @@ public abstract class Shop extends BaseEntity {
     private String contact;
     @Column(nullable = false)
     private String operationTime;
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    private List<ShopImage> images = new ArrayList<>();
+    @OneToMany(mappedBy = "shop")
+    private List<MenuCategory> menuCategories = new ArrayList<>();
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    private List<ShopTag> tags = new ArrayList<>();
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    private List<ShopCategory> categories = new ArrayList<>();
 
     //    @OneToMany(mappedBy = "shop")
 //    private List<Review> reviews;
