@@ -11,6 +11,8 @@ import teaspoon.fooding.domain.user.User;
 import teaspoon.fooding.repository.ShopLikeRepository;
 import teaspoon.fooding.repository.UserRepository;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -31,5 +33,13 @@ public class UserService {
                 .user(user)
                 .build();
         shopLikeRepository.save(shopLike);
+    }
+
+    @Transactional
+    public void unlikeShop(User user, Shop shop) {
+        List<ShopLike> shopLikes = shopLikeRepository.findByUserAndShop(user, shop);
+        if (shopLikes.size() != 0) {
+            shopLikeRepository.deleteAll(shopLikes);
+        }
     }
 }

@@ -10,5 +10,7 @@ import java.util.List;
 public interface ShopLikeRepository extends JpaRepository<ShopLike, Long> {
     public List<ShopLike> findByUser(User user);
 
+    public List<ShopLike> findByUserAndShop(User user, Shop shop);
+
     public boolean existsByUserAndShop(User user, Shop shop);
 }

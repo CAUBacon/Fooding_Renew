@@ -87,4 +87,26 @@ class UserServiceTest {
         assertThat(throwable).isInstanceOf(CShopLikeDuplicatedException.class);
     }
 
+    @Test
+    void unlikeShop_가게를_좋아요를_취소한다() {
+        // given
+        userService.likeShop(user, shop);
+
+        // when
+        userService.unlikeShop(user, shop);
+        // then
+        List<ShopLike> shopLikes = shopLikeRepository.findByUser(user);
+        assertThat(shopLikes.size()).isEqualTo(0);
+    }
+
+    @Test
+    void unlikeShop_좋아요를_누르지_않은_가게를_좋아요_취소하더라도_에러를_던지지_않고_무시한다() {
+        // given
+        // when
+        userService.unlikeShop(user, shop);
+        // then
+        List<ShopLike> shopLikes = shopLikeRepository.findByUser(user);
+        assertThat(shopLikes.size()).isEqualTo(0);
+    }
+
 }
