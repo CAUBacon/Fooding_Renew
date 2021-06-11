@@ -70,11 +70,12 @@ class UserServiceTest {
         // given
 
         // when
-        userService.likeShop(user, shop);
+        long result = userService.likeShop(user, shop);
         // then
         List<ShopLike> shopLikes = shopLikeRepository.findByUser(user);
         assertThat(shopLikes.size()).isEqualTo(1);
         assertThat(shopLikes).extracting("user", "shop").contains(tuple(user, shop));
+        assertThat(result).isEqualTo(1);
     }
 
     @Test
@@ -93,20 +94,22 @@ class UserServiceTest {
         userService.likeShop(user, shop);
 
         // when
-        userService.unlikeShop(user, shop);
+        long result = userService.unlikeShop(user, shop);
         // then
         List<ShopLike> shopLikes = shopLikeRepository.findByUser(user);
         assertThat(shopLikes.size()).isEqualTo(0);
+        assertThat(result).isEqualTo(0);
     }
 
     @Test
     void unlikeShop_좋아요를_누르지_않은_가게를_좋아요_취소하더라도_에러를_던지지_않고_무시한다() {
         // given
         // when
-        userService.unlikeShop(user, shop);
+        long result = userService.unlikeShop(user, shop);
         // then
         List<ShopLike> shopLikes = shopLikeRepository.findByUser(user);
         assertThat(shopLikes.size()).isEqualTo(0);
+        assertThat(result).isEqualTo(0);
     }
 
 }

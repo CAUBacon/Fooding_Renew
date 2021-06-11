@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
     private final ShopLikeRepository shopLikeRepository;
 
     @Transactional
-    public void likeShop(User user, Shop shop) {
+    public long likeShop(User user, Shop shop) {
         boolean didUserLikeShop = shopLikeRepository.existsByUserAndShop(user, shop);
         if (didUserLikeShop) {
             throw new CShopLikeDuplicatedException();
@@ -36,14 +36,16 @@ public class UserService implements UserDetailsService {
                 .user(user)
                 .build();
         shopLikeRepository.save(shopLike);
+        return shopLikeRepository.countByShop(shop);
     }
 
     @Transactional
-    public void unlikeShop(User user, Shop shop) {
+    public long unlikeShop(User user, Shop shop) {
         List<ShopLike> shopLikes = shopLikeRepository.findByUserAndShop(user, shop);
         if (shopLikes.size() != 0) {
             shopLikeRepository.deleteAll(shopLikes);
         }
+        return shopLikeRepository.countByShop(shop);
     }
 
     @Override
