@@ -1,6 +1,7 @@
 package teaspoon.fooding.domain.shop;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -23,4 +24,10 @@ public class ShopLike extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Builder
+    public ShopLike(Shop shop, User user) {
+        this.shop = shop;
+        this.user = user;
+    }
 }
