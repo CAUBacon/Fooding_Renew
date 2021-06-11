@@ -2,6 +2,9 @@ package teaspoon.fooding.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import teaspoon.fooding.api.advice.exception.CShopLikeDuplicatedException;
@@ -17,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final ShopLikeRepository shopLikeRepository;
 
@@ -40,6 +43,16 @@ public class UserService {
         List<ShopLike> shopLikes = shopLikeRepository.findByUserAndShop(user, shop);
         if (shopLikes.size() != 0) {
             shopLikeRepository.deleteAll(shopLikes);
+        }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        try {
+            Long userId = Long.parseLong(username);
+            return userRepository.findById(userId).orElse(null);
+        } catch (NumberFormatException e) {
+            return null;
         }
     }
 }
