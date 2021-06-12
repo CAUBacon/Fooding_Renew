@@ -42,4 +42,8 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review")
     private List<ReviewTag> tags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "review")
+    private List<UserLikeReview> likers = new ArrayList<>();
+
+
 }
