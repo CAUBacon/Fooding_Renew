@@ -4,14 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import teaspoon.fooding.api.advice.exception.*;
 import teaspoon.fooding.api.dto.CommonResult;
 import teaspoon.fooding.service.ResponseService;
-
-import java.nio.file.AccessDeniedException;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -22,11 +20,6 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<CommonResult> defaultException(Exception e) throws Exception {
-        if (e instanceof AccessDeniedException
-                || e instanceof AuthenticationException) {
-            System.out.println("Catch e = " + e);
-            throw e;
-        }
         System.out.println(e);
         e.printStackTrace();
         return responseService.makeInternalErrorResponse(500, "서버 오류");
