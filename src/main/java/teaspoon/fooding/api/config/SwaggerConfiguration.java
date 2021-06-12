@@ -2,6 +2,8 @@ package teaspoon.fooding.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -25,9 +27,10 @@ public class SwaggerConfiguration {
                 .produces(getProduceContentTypes())
                 .apiInfo(getApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .ignoredParameterTypes(AuthenticationPrincipal.class);
     }
 
     private Set<String> getConsumeContentTypes() {
