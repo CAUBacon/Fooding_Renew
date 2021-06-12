@@ -1,6 +1,7 @@
 package teaspoon.fooding.domain.review;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import teaspoon.fooding.domain.BaseEntity;
@@ -45,5 +46,14 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review")
     private List<UserLikeReview> likers = new ArrayList<>();
 
-
+    @Builder
+    public Review(Shop shop, User author, String content, double score, List<ReviewImage> images,
+                  List<ReviewTag> tags) {
+        this.shop = shop;
+        this.author = author;
+        this.content = content;
+        this.score = score;
+        this.images = images;
+        this.tags = tags;
+    }
 }
