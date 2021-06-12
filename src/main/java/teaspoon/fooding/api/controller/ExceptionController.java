@@ -2,7 +2,6 @@ package teaspoon.fooding.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import teaspoon.fooding.api.advice.exception.CAuthenticationEntryPointException;
@@ -15,12 +14,12 @@ import java.nio.file.AccessDeniedException;
 @RequestMapping("/exception")
 public class ExceptionController {
 
-    @GetMapping("/entrypoint")
+    @RequestMapping("/entrypoint")
     public ResponseEntity<CommonResult> entrypointException() {
         throw new CAuthenticationEntryPointException();
     }
 
-    @GetMapping("/accessdenied")
+    @RequestMapping("/accessdenied")
     public ResponseEntity<CommonResult> accessDeniedException() throws AccessDeniedException {
         throw new AccessDeniedException("");
     }

@@ -22,6 +22,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<CommonResult> defaultException(Exception e) {
         System.out.println(e);
+        e.printStackTrace();
         return responseService.makeInternalErrorResponse(500, "서버 오류");
     }
 
