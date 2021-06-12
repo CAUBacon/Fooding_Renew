@@ -30,5 +30,6 @@ public class UserLikeReview extends BaseEntity {
     public UserLikeReview(Review review, User user) {
         this.review = review;
         this.user = user;
+        this.review.getLikers().add(this);
     }
 }
